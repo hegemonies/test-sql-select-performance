@@ -52,7 +52,6 @@ class TestPerformanceService(
     }
 
     fun selectAll(pageSize: Int) {
-        logger.info("Start select all")
         val elapsed = measureTimeMillis {
             var pageNumber = 0
             val sort = Sort.by(Sort.Direction.ASC, Task::id.name)
@@ -62,7 +61,19 @@ class TestPerformanceService(
                 val tasks = taskRepository.findAll(pageRequest).content
             } while (tasks.size == pageSize)
         }
-        logger.info("Finish select all with pageSize=$pageSize by $elapsed ms")
+    }
+
+    fun runTestSelectAll(pageSize: Int) {
+        logger.info("Start select all")
+        val testTimes = 10
+        var elapsedCounter = 0L
+        (1..testTimes).forEach {
+            val elapsed = measureTimeMillis {
+                selectAll(pageSize)
+            }
+            elapsedCounter += elapsed
+        }
+        logger.info("Finish select all with pageSize=$pageSize by ${elapsedCounter / testTimes} ms")
     }
 
     fun runTest() {
@@ -74,25 +85,25 @@ class TestPerformanceService(
         // run test on 1_000_000 tasks and 100 chunk size
         // run test on 10_000_000 tasks and 100 chunk size
 //        loadData(1_000, 100)
-//        selectAll(100)
-//        selectAll(1000)
-//        selectAll(10000)
+//        runTestSelectAll(100)
+//        runTestSelectAll(1000)
+//        runTestSelectAll(10000)
 //        loadData(10_000, 100)
-//        selectAll(100)
-//        selectAll(1000)
-//        selectAll(10000)
+//        runTestSelectAll(100)
+//        runTestSelectAll(1000)
+//        runTestSelectAll(10000)
 //        loadData(100_000, 100)
-//        selectAll(100)
-//        selectAll(1000)
-//        selectAll(10000)
+//        runTestSelectAll(100)
+//        runTestSelectAll(1000)
+//        runTestSelectAll(10000)
 //        loadData(1_000_000, 100)
-//        selectAll(100)
-//        selectAll(1000)
-//        selectAll(10000)
+//        runTestSelectAll(100)
+//        runTestSelectAll(1000)
+//        runTestSelectAll(10000)
 //        loadData(10_000_000, 100)
-//        selectAll(100)
-//        selectAll(1000)
-//        selectAll(10000)
+//        runTestSelectAll(100)
+//        runTestSelectAll(1000)
+//        runTestSelectAll(10000)
 //        deleteData()
 
         // run test on 1_000 tasks and 1000 chunk size
@@ -101,25 +112,25 @@ class TestPerformanceService(
         // run test on 1_000_000 tasks and 1000 chunk size
         // run test on 10_000_000 tasks and 1000 chunk size
 //        loadData(1_000, 1000)
-//        selectAll(100)
-//        selectAll(1000)
-//        selectAll(10000)
+//        runTestSelectAll(100)
+//        runTestSelectAll(1000)
+//        runTestSelectAll(10000)
 //        loadData(10_000, 1000)
-//        selectAll(100)
-//        selectAll(1000)
-//        selectAll(10000)
+//        runTestSelectAll(100)
+//        runTestSelectAll(1000)
+//        runTestSelectAll(10000)
 //        loadData(100_000, 1000)
-//        selectAll(100)
-//        selectAll(1000)
-//        selectAll(10000)
+//        runTestSelectAll(100)
+//        runTestSelectAll(1000)
+//        runTestSelectAll(10000)
 //        loadData(1_000_000, 1000)
-//        selectAll(100)
-//        selectAll(1000)
-//        selectAll(10000)
+//        runTestSelectAll(100)
+//        runTestSelectAll(1000)
+//        runTestSelectAll(10000)
 //        loadData(10_000_000, 1000)
-//        selectAll(100)
-//        selectAll(1000)
-//        selectAll(10000)
+//        runTestSelectAll(100)
+//        runTestSelectAll(1000)
+//        runTestSelectAll(10000)
 //        deleteData()
 
         // run test on 1_000 tasks and 10000 chunk size
@@ -128,25 +139,25 @@ class TestPerformanceService(
         // run test on 1_000_000 tasks and 10000 chunk size
         // run test on 10_000_000 tasks and 10000 chunk size
         loadData(1_000, 10000)
-        selectAll(100)
-        selectAll(1000)
-        selectAll(10000)
+        runTestSelectAll(100)
+        runTestSelectAll(1000)
+        runTestSelectAll(10000)
         loadData(10_000, 10000)
-        selectAll(100)
-        selectAll(1000)
-        selectAll(10000)
+        runTestSelectAll(100)
+        runTestSelectAll(1000)
+        runTestSelectAll(10000)
         loadData(100_000, 10000)
-        selectAll(100)
-        selectAll(1000)
-        selectAll(10000)
+        runTestSelectAll(100)
+        runTestSelectAll(1000)
+        runTestSelectAll(10000)
         loadData(1_000_000, 10000)
-        selectAll(100)
-        selectAll(1000)
-        selectAll(10000)
+        runTestSelectAll(100)
+        runTestSelectAll(1000)
+        runTestSelectAll(10000)
         loadData(10_000_000, 10000)
-        selectAll(100)
-        selectAll(1000)
-        selectAll(10000)
+        runTestSelectAll(100)
+        runTestSelectAll(1000)
+        runTestSelectAll(10000)
         deleteData()
     }
 
